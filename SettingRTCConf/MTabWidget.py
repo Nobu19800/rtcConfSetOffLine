@@ -118,6 +118,7 @@ class MTabWidget(QtGui.QWidget):
 
     def addSpinBox(self, name, label, value, default):
         wid = QtGui.QSpinBox()
+        wid.setRange(0,10000)
         if len(value) == 0:
             wid.setValue(int(default))
         elif value[0] == "":
@@ -134,6 +135,7 @@ class MTabWidget(QtGui.QWidget):
 
     def addDoubleSpinBox(self, name, label, value, default):
         wid = QtGui.QDoubleSpinBox()
+        wid.setRange(0,10000)
         if len(value) == 0:
             wid.setValue(float(default))
         elif value[0] == "":
