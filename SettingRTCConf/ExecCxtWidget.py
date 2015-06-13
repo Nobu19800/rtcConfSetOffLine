@@ -48,7 +48,7 @@ class ExecCxtWidget(MTabWidget):
         self.loadECButton.clicked.connect(self.loadECSlot)
 
 
-        self.addTextBox("filenameBox.sub", u"実行コンテキスト名", [""] , "")
+        self.addTextBox("filenameBox.sub", u"モジュール名を直接入力してください", [""] , "")
         self.loadFileECButton = QtGui.QPushButton(u"実行コンテキスト読み込み")
         self.WidList["filenameBox.sub"]["Layout"].addWidget(self.loadFileECButton)
         self.loadFileECButton.clicked.connect(self.loadFileECSlot)

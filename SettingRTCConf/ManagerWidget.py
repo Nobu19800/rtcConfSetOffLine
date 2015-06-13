@@ -67,7 +67,7 @@ class ManagerWidget(MTabWidget):
         self.subLayouts[-1].addWidget(self.loadRTCButton)
         self.loadRTCButton.clicked.connect(self.loadRTCSlot)
 
-        self.addTextBox("filenameBox.sub", u"RTコンポーネント名", [""] , "")
+        self.addTextBox("filenameBox.sub", u"モジュール名を直接入力してください", [""] , "")
         self.loadFileRTCButton = QtGui.QPushButton(u"RTコンポーネント読み込み")
         self.WidList["filenameBox.sub"]["Layout"].addWidget(self.loadFileRTCButton)
         self.loadFileRTCButton.clicked.connect(self.loadFileRTCSlot)

@@ -50,13 +50,14 @@ class MTabWidget(QtGui.QWidget):
         self.mainLayout.addLayout(self.subLayouts[-1])
 
     def apendWidget(self, wid, name, label):
-        widget = QtGui.QWidget(self)
+        #widget = QtGui.QWidget(self)
+        widget = QtGui.QGroupBox(label)
         layout = QtGui.QVBoxLayout()
         widget.setLayout(layout)
-        Lb = QtGui.QLabel(label)
+        #Lb = QtGui.QLabel(label)
         
         
-        layout.addWidget(Lb)
+        #layout.addWidget(Lb)
         layout.addWidget(wid)
 
         self.widNum += 1
