@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 ##
-#   @file .py
-#   @brief 
+#   @file MainWindow.py
+#   @brief メインウインドウ
 
 
 
@@ -47,7 +47,10 @@ from SettingRTCConf.TimerWidget import TimerWidget
 from SettingRTCOffLine_Lib.ManagerControl import ManagerControl
 
 
-
+##
+# @class MainWindow
+# @brief メインウインドウ
+#
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -57,29 +60,29 @@ class MainWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.tab_widget)
 
         self.createAction()
-	self.createMenus()
+        self.createMenus()
 
-	#self.mgrc = ManagerControl("")
-	self.mgrc = None
-	self.curFile = ""
-	
+        #self.mgrc = ManagerControl("")
+        self.mgrc = None
+        self.curFile = ""
+
 	
 
-	#self.mgrc.CreateComp("MyFirstComponent",[".\\MyFirstComponent"])
+        #self.mgrc.CreateComp("MyFirstComponent",[".\\MyFirstComponent"])
         #self.mgrc.CreateComp("MyFirstComponent",[".\\MyFirstComponent"])
         
     ##
-    #アクションの作成の関数
-    ##
+    # @brief アクションの作成の関数
+    # @param self
     def createAction(self):
 
-	self.newAct = QtGui.QAction("&New...",self)
-	self.newAct.setShortcuts(QtGui.QKeySequence.New)
+        self.newAct = QtGui.QAction("&New...",self)
+        self.newAct.setShortcuts(QtGui.QKeySequence.New)
         self.newAct.triggered.connect(self.newFile)
         
 
 
-	self.openAct = QtGui.QAction("&Open...",self)
+        self.openAct = QtGui.QAction("&Open...",self)
         self.openAct.setShortcuts(QtGui.QKeySequence.Open)
         self.openAct.triggered.connect(self.open)
 
@@ -93,45 +96,48 @@ class MainWindow(QtGui.QMainWindow):
         self.saveAsAct.triggered.connect(self.saveAs)
 
     ##
-    #メニューの作成の関数
-    ##
+    # @brief メニューの作成の関数
+    # @param self
     def createMenus(self):
 
-	self.fileMenu = self.menuBar().addMenu("&File")
-	self.fileMenu.addAction(self.newAct)
+        self.fileMenu = self.menuBar().addMenu("&File")
+        self.fileMenu.addAction(self.newAct)
         self.fileMenu.addAction(self.openAct)
         self.fileMenu.addAction(self.saveAct)
         self.fileMenu.addAction(self.saveAsAct)
 
 
+    ##
+    # @brief タブの作成の関数
+    # @param self
     def createTabs(self):
         self.Tabs = []
         self.ManagerTab = ManagerWidget(self.mgrc)
         self.tab_widget.addTab(self.ManagerTab, u"マネージャ")
         self.Tabs.append(self.ManagerTab)
         self.CorbaTab = CorbaWidget(self.mgrc)
-	self.tab_widget.addTab(self.CorbaTab, u"CORBA")
-	self.Tabs.append(self.CorbaTab)
-	self.ConfigTab = ConfigWidget(self.mgrc)
-	self.tab_widget.addTab(self.ConfigTab, u"一般的")
-	self.Tabs.append(self.ConfigTab)
-	self.NamingTab = NamingWidget(self.mgrc)
-	self.tab_widget.addTab(self.NamingTab, u"ネームサービス")
-	self.Tabs.append(self.NamingTab)
-	self.LoggerTab = LoggerWidget(self.mgrc)
-	self.tab_widget.addTab(self.LoggerTab, u"ロガー")
-	self.Tabs.append(self.LoggerTab)
-	self.TimerTab = TimerWidget(self.mgrc)
-	self.tab_widget.addTab(self.TimerTab, u"タイマ")
-	self.Tabs.append(self.TimerTab)
-	self.ExecCxtTab = ExecCxtWidget(self.mgrc, self.ManagerTab)
-	self.tab_widget.addTab(self.ExecCxtTab, u"実行コンテキスト")
-	self.Tabs.append(self.ExecCxtTab)
-	
+        self.tab_widget.addTab(self.CorbaTab, u"CORBA")
+        self.Tabs.append(self.CorbaTab)
+        self.ConfigTab = ConfigWidget(self.mgrc)
+        self.tab_widget.addTab(self.ConfigTab, u"一般的")
+        self.Tabs.append(self.ConfigTab)
+        self.NamingTab = NamingWidget(self.mgrc)
+        self.tab_widget.addTab(self.NamingTab, u"ネームサービス")
+        self.Tabs.append(self.NamingTab)
+        self.LoggerTab = LoggerWidget(self.mgrc)
+        self.tab_widget.addTab(self.LoggerTab, u"ロガー")
+        self.Tabs.append(self.LoggerTab)
+        self.TimerTab = TimerWidget(self.mgrc)
+        self.tab_widget.addTab(self.TimerTab, u"タイマ")
+        self.Tabs.append(self.TimerTab)
+        self.ExecCxtTab = ExecCxtWidget(self.mgrc, self.ManagerTab)
+        self.tab_widget.addTab(self.ExecCxtTab, u"実行コンテキスト")
+        self.Tabs.append(self.ExecCxtTab)
+
 
     ##
-    #ファイル読み込みスロット
-    ##
+    # @brief ファイル読み込みスロット
+    # @param self
     def open(self):
         if self.mgrc == None:
             fileName = QtGui.QFileDialog.getOpenFileName(self,u"開く","","Config File (*.conf);;All Files (*)")
@@ -148,6 +154,10 @@ class MainWindow(QtGui.QMainWindow):
         else:
             self.mesBox(u"既にコンフィギュレーションファイルは開いています")
 
+    ##
+    # @brief ファイル保存のスロット
+    # @param self
+    # @return 成功でTrue、失敗でFalse
     def save(self):
         if self.curFile == "":
             return self.saveAs()
@@ -155,6 +165,10 @@ class MainWindow(QtGui.QMainWindow):
             self.saveFile(self.curFile)
             return True
 
+    ##
+    # @brief ファイル保存の関数
+    # @param self
+    # @param filename ファイル名
     def saveFile(self, filename):
         f = open(filename, "w")
 
@@ -181,25 +195,25 @@ class MainWindow(QtGui.QMainWindow):
                     f.write(s)
         f.close()
     ##
-    #ファイル保存のスロット
-    ##
+    # @brief ファイル別名で保存するときのスロット(未実装)
+    # @param self 
     def saveAs(self):
 
-	fileName = QtGui.QFileDialog.getSaveFileName(self,u"保存", "","Config File (*.conf);;All Files (*)")
-	if fileName.isEmpty():
+        fileName = QtGui.QFileDialog.getSaveFileName(self,u"保存", "","Config File (*.conf);;All Files (*)")
+        if fileName.isEmpty():
             return False
 
-	ba = str(fileName.toLocal8Bit())
+        ba = str(fileName.toLocal8Bit())
 
-	self.saveFile(ba)
+        self.saveFile(ba)
 
 	
 
 	
 
     ##
-    #初期化のスロット
-    ##
+    # @brief 初期化のスロット
+    # @param self 
     def newFile(self):
         if self.mgrc == None:
             self.mgrc = ManagerControl("")
@@ -223,7 +237,10 @@ class MainWindow(QtGui.QMainWindow):
 
 
         
-
+    ##
+    # @brief メッセージボックス表示
+    # @param self 
+    # @param mes 表示する文字列
     def mesBox(self, mes):
         msgbox = QtGui.QMessageBox( self )
         msgbox.setText( mes )

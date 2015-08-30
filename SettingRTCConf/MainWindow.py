@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 ##
-#   @file .py
-#   @brief 
+#   @file MainWindow.py
+#   @brief メインウインドウ
 
 
 
@@ -42,8 +42,14 @@ from NamingWidget import NamingWidget
 from TimerWidget import TimerWidget
 
 
-
+##
+# @class MainWindow
+# @brief メインウインドウ
+#
 class MainWindow(QtGui.QMainWindow):
+    ##
+    # @brief コンストラクタ
+    # @param self 
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowTitle(u"RTC設定ファイル作成ツール")
@@ -62,9 +68,10 @@ class MainWindow(QtGui.QMainWindow):
         #self.mgrc.CreateComp("MyFirstComponent",[".\\MyFirstComponent"])
         #self.mgrc.CreateComp("MyFirstComponent",[".\\MyFirstComponent"])
         
+    
     ##
-    #アクションの作成の関数
-    ##
+    # @brief アクションの作成の関数
+    # @param self
     def createAction(self):
 
         self.newAct = QtGui.QAction("&New...",self)
@@ -82,9 +89,10 @@ class MainWindow(QtGui.QMainWindow):
         self.saveAct.setShortcuts(QtGui.QKeySequence.Save)
         self.saveAct.triggered.connect(self.save)
 
+    
     ##
-    #メニューの作成の関数
-    ##
+    # @brief メニューの作成の関数
+    # @param self
     def createMenus(self):
 
         self.fileMenu = self.menuBar().addMenu("&File")
@@ -92,7 +100,9 @@ class MainWindow(QtGui.QMainWindow):
         self.fileMenu.addAction(self.openAct)
         self.fileMenu.addAction(self.saveAct)
 
-
+    ##
+    # @brief タブの作成の関数
+    # @param self
     def createTabs(self):
         self.Tabs = []
         self.ManagerTab = ManagerWidget(self.mgrc)
@@ -116,11 +126,12 @@ class MainWindow(QtGui.QMainWindow):
         self.ExecCxtTab = ExecCxtWidget(self.mgrc, self.ManagerTab)
         self.tab_widget.addTab(self.ExecCxtTab, u"実行コンテキスト")
         self.Tabs.append(self.ExecCxtTab)
-	
 
+
+    
     ##
-    #ファイル読み込みスロット
-    ##
+    # @brief ファイル読み込みスロット
+    # @param self 
     def open(self):
         if self.mgrc == None:
             fileName = QtGui.QFileDialog.getOpenFileName(self,u"開く","","Config File (*.conf);;All Files (*)")
@@ -136,12 +147,15 @@ class MainWindow(QtGui.QMainWindow):
             
         else:
             self.mesBox(u"既にコンフィギュレーションファイルは開いています")
-
+    ##
+    # @brief ファイル別名で保存するときのスロット(未実装)
+    # @param self 
     def saveAs(self):
         pass
+    
     ##
-    #ファイル保存のスロット
-    ##
+    # @brief ファイル保存のスロット
+    # @param self 
     def save(self):
 
         fileName = QtGui.QFileDialog.getSaveFileName(self,u"保存", "","Config File (*.conf);;All Files (*)")
@@ -245,9 +259,10 @@ class MainWindow(QtGui.QMainWindow):
 
 	
 
+    
     ##
-    #初期化のスロット
-    ##
+    # @brief 初期化のスロット
+    # @param self 
     def newFile(self):
         if self.mgrc == None:
             self.mgrc = ManagerControl("")
@@ -271,7 +286,10 @@ class MainWindow(QtGui.QMainWindow):
 
 
         
-
+    ##
+    # @brief メッセージボックス表示
+    # @param self 
+    # @param mes 表示する文字列
     def mesBox(self, mes):
         msgbox = QtGui.QMessageBox( self )
         msgbox.setText( mes )

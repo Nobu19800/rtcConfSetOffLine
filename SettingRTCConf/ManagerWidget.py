@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 ##
-#   @file .py
-#   @brief 
+#   @file ManagerWidget.py
+#   @brief マネージャ関連設定ウインドウ
 
 
 
@@ -37,9 +37,17 @@ from ManagerControl import ManagerControl
 
 
 
-
+##
+# @class ManagerWidget
+# @brief マネージャ関連設定ウィジェット
+#
 class ManagerWidget(MTabWidget):
-    
+    ##
+    # @brief コンストラクタ
+    # @param self 
+    # @param mgrc マネージャ操作オブジェクト
+    # @param language プログラミング言語
+    # @param parent 親ウィジェット
     def __init__(self, mgrc, language="Python",  parent=None):
         MTabWidget.__init__(self, mgrc, parent)
         self.setGUI("manager")
@@ -73,7 +81,9 @@ class ManagerWidget(MTabWidget):
         self.loadFileRTCButton.clicked.connect(self.loadFileRTCSlot)
 
         
-
+    ##
+    # @brief RTC読み込みボタンのスロット(テキストボックスのファイル名から設定)
+    # @param self 
     def loadFileRTCSlot(self):
         wid = self.WidList["filenameBox.sub"]["Widget"]
         s = str(wid.text().toLocal8Bit())
@@ -81,6 +91,9 @@ class ManagerWidget(MTabWidget):
             return
         self.loadRTC(s)
 
+    ##
+    # @brief 言語追加ボタンのスロット
+    # @param self 
     def addLangSlot(self):
         wid = self.WidList["manager.supported_languages"]["Widget"]
         
@@ -89,11 +102,17 @@ class ManagerWidget(MTabWidget):
             if s != "":
                 wid.addItem(s)
         
-
+    ##
+    # @brief 言語削除ボタンのスロット
+    # @param self 
     def delLangSlot(self):
         wid = self.WidList["manager.supported_languages"]["Widget"]
         wid.removeItem(wid.findText(wid.currentText()))
 
+
+    ##
+    # @brief RTC追加ボタンのスロット
+    # @param self 
     def createCompSlot(self):
         wid = self.WidList["manager.components.precreate"]["Widget"]
         s = str(wid.currentText().toLocal8Bit())
@@ -106,23 +125,35 @@ class ManagerWidget(MTabWidget):
 
         self.mgrc.addComp(s, comp)
 
+    ##
+    # @brief RTC削除ボタンのスロット
+    # @param self 
     def delCompSlot(self):
         wid = self.WidList["manager.components.precreate"]["Widget"]
         self.mgrc.deleteComp(str(wid.currentText().toLocal8Bit()))
         wid.removeItem(wid.findText(wid.currentText()))
 
         
-
+    ##
+    # @brief ローダブルモジュール削除のスロット
+    # @param self 
     def delModuleSlot(self):
         wid = self.WidList["manager.modules.preload"]["Widget"]
         wid.removeItem(wid.findText(wid.currentText()))
 
+    ##
+    # @brief サーチパス削除のスロット
+    # @param self 
     def delPathSlot(self):
         wid = self.WidList["manager.modules.load_path"]["Widget"]
         wid.removeItem(wid.findText(wid.currentText()))
 
 
-
+    ##
+    # @brief 入力されたパス1がパス2の子ディレクトリかを判定
+    # @param self
+    # @param path パス1
+    # @param opath パス2
     def judgePath(self, path, opath):
         pathList = path.split("/")
         if len(pathList) < len(opath):
@@ -131,12 +162,16 @@ class ManagerWidget(MTabWidget):
             if opath[i] != pathList[i]:
                 return False
         return True
-
+    
+    ##
+    # @brief RTCのファイル名からRTC、ローダブルモジュール、サーチパスの追加
+    # @param self
+    # @param fileName パス1
     def loadRTC(self, fileName):
         fname = os.path.basename(fileName)
         name, ext = os.path.splitext(fname)
 
-	tmp_dname = os.path.dirname(fileName)
+        tmp_dname = os.path.dirname(fileName)
         dname = [tmp_dname]
 
 
@@ -174,7 +209,9 @@ class ManagerWidget(MTabWidget):
         if wid.findText(dname[0]) == -1:
             
             wid.addItem(dname[0])
-
+    ##
+    # @brief RTCの読み込みボタンのスロット(ダイアログからファイルを選択)
+    # @param self
     def loadRTCSlot(self):
         pyFilePath = "Python File (*.py);;"
         cppFilePath = "Dynamic Link Library (*.dll *.so);;"

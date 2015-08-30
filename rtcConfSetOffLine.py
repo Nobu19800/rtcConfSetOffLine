@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 ##
-#   @file SettingRTCConf.py
-#   @brief 
+#   @file rtcConfSetOffLine.py
+#   @brief rtc.conf作成ツール
 
 
 
@@ -43,7 +43,7 @@ import SettingRTCOffLine_Lib.MainWindow
 
         
 ##
-# @brief 
+# @brief メイン関数
 def main():
     #mgrc = ManagerControl("")
     

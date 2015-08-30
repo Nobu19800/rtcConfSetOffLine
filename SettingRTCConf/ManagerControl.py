@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 ##
-#   @file .py
-#   @brief 
+#   @file ManagerControl.py
+#   @brief マネージャ操作オブジェクト
 
 
 
@@ -32,13 +32,20 @@ import CosNaming
 
 
 
-
+##
+# @class ManagerControl
+# @brief マネージャ操作オブジェクト
+#
 class ManagerControl:
     TextBox = 1
     Combox = 2
     TextCombox = 3
     SpinBox = 4
     DoubleSpinBox = 5
+    ##
+    # @brief コンストラクタ
+    # @param self 
+    # @param conf_filepath 設定ファイルのパス
     def __init__(self, conf_filepath):
         self.conf_filepath = conf_filepath
         
@@ -59,7 +66,9 @@ class ManagerControl:
         
 
         
-        
+    ##
+    # @brief コンフィギュレーションパラメータ設定ファイルを読み込む
+    # @param self 
     def SetParam(self):
 
         self.confNameList = [{"default":"localhost","type":ManagerControl.TextBox,"list":[],"name":"corba.nameservers","label":u"RTC等を登録するネームサーバ"},
@@ -123,7 +132,11 @@ class ManagerControl:
         
         
         
-
+    ##
+    # @brief 指定したプロパティの値を読み込み
+    # @param self
+    # @param name プロパティ名
+    # @return プロパティの値
     def getParam(self, name):
         param = self.getProperty(self.prop, name, "")
         p = [param]
@@ -136,9 +149,14 @@ class ManagerControl:
     
         
 
+    
     ##
-    #rtc.confの設定を取得する関数
-    ##
+    # @brief rtc.confの設定を取得する関数
+    # @param self
+    # @param prop プロパティリスト
+    # @param key キー
+    # @param value プロパティの値
+    # @return プロパティの値
     def getProperty(self, prop, key, value):
         
         if  prop.findNode(key) != None:
@@ -146,7 +164,12 @@ class ManagerControl:
             value = prop.getProperty(key)
         return value
     
-
+    ##
+    # @brief 指定したファイルからRTCの初期化関数を取得
+    # @param self
+    # @param filename ファイル名
+    # @param filepath ファイルパス
+    # @return RTCの初期化関数
     def getFunc(self, filename, filepath):
         try:
             sys.path.append(filepath[0])
@@ -160,7 +183,10 @@ class ManagerControl:
         
         
 
-
+    ##
+    # @brief RTC削除
+    # @param self
+    # @param name RTC名
     def deleteComp(self, name):
         
         if self.compList.has_key(name):
@@ -170,16 +196,30 @@ class ManagerControl:
             #if len(self.compList[name]["compList"]) == 0:
             #    del self.compList[name]
 
+    ##
+    # @brief RTC追加
+    # @param self
+    # @param name RTC名
+    # @param comp RTCオブジェクト
     def addComp(self, name, comp):
         
         if self.compList.has_key(name):
             self.compList[name]["compList"].append(comp)
 
-    
+    ##
+    # @brief 実行コンテキスト追加
+    # @param self
+    # @param filepath ファイル名
     def createEC(self, filepath):
         filepath[0] = os.path.relpath(filepath[0])
                 
-        
+
+    ##
+    # @brief RTC追加
+    # @param self
+    # @param filename ファイル名
+    # @param filepath ファイルパス
+    # @return 成功でTrue、失敗でFalse
     def createComp(self, filename, filepath):
         
         

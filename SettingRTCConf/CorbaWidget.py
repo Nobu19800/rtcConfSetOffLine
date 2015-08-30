@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 ##
-#   @file .py
-#   @brief 
+#   @file CorbaWidget.py
+#   @brief CORBA関連設定ウインドウ
 
 
 
@@ -36,9 +36,16 @@ from MTabWidget import MTabWidget
 from ManagerControl import ManagerControl
 
 
-
+##
+# @class CorbaWidget
+# @brief CORBA関連設定ウィジェット
+#
 class CorbaWidget(MTabWidget):
-    
+    ##
+    # @brief コンストラクタ
+    # @param self 
+    # @param mgrc マネージャ操作オブジェクト
+    # @param parent 親ウィジェット
     def __init__(self, mgrc, parent=None):
         MTabWidget.__init__(self, mgrc, parent)
         self.setGUI("corba")
@@ -51,6 +58,9 @@ class CorbaWidget(MTabWidget):
         self.WidList["corba.endpoints"]["Layout"].addWidget(self.delEndpointsButton)
         self.delEndpointsButton.clicked.connect(self.delEndpointsSlot)
 
+    ##
+    # @brief エンドポイント追加ボタンのスロット
+    # @param self 
     def addEndpointsSlot(self):
         wid = self.WidList["corba.endpoints"]["Widget"]
         
@@ -59,7 +69,9 @@ class CorbaWidget(MTabWidget):
             if s != "":
                 wid.addItem(s)
         
-
+    ##
+    # @brief エンドポイント削除ボタンのスロット
+    # @param self 
     def delEndpointsSlot(self):
         wid = self.WidList["corba.endpoints"]["Widget"]
         wid.removeItem(wid.findText(wid.currentText()))

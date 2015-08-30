@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 ##
-#   @file .py
-#   @brief 
+#   @file ExecCxtWidget.py
+#   @brief 実行コンテキスト関連設定ウインドウ
 
 
 
@@ -35,9 +35,18 @@ from PyQt4 import QtCore, QtGui
 from MTabWidget import MTabWidget
 from ManagerControl import ManagerControl
 
-
+##
+# @class ConfigWidget
+# @brief 実行コンテキスト関連設定ウィジェット
+#
 class ExecCxtWidget(MTabWidget):
-    
+    ##
+    # @brief コンストラクタ
+    # @param self 
+    # @param mgrc マネージャ操作オブジェクト
+    # @param mgrWidget マネージャ関連設定ウィジェット
+    # @param language プログラミング言語
+    # @param parent 親ウィジェット
     def __init__(self, mgrc, mgrWidget, language="Python", parent=None):
         MTabWidget.__init__(self, mgrc, parent)
         self.setGUI("exec_cxt")
@@ -67,7 +76,10 @@ class ExecCxtWidget(MTabWidget):
         self.mgrWidget = mgrWidget
 
     
-
+    ##
+    # @brief 実行コンテキストのファイル名から各種設定を行う
+    # @param self 
+    # @param fileName 実行コンテキストのファイル名(dll、so、py)
     def loadEC(self, fileName):
         
         
@@ -92,7 +104,9 @@ class ExecCxtWidget(MTabWidget):
         if wid.findText(name) == -1:
             wid.addItem(name)
             wid.lineEdit().setText(name)
-
+    ##
+    # @brief 実行コンテキストのファイル読み込みボタンのスロット(テキストボックスで設定)
+    # @param self 
     def loadFileECSlot(self):
         wid = self.WidList["filenameBox.sub"]["Widget"]
         s = str(wid.text().toLocal8Bit())
@@ -100,6 +114,9 @@ class ExecCxtWidget(MTabWidget):
             return
         self.loadEC(s)
 
+    ##
+    # @brief 実行コンテキストのファイル読み込みボタンのスロット(ダイアログでファイルを選択)
+    # @param self 
     def loadECSlot(self):
         pyFilePath = "Python File (*.py);;"
         cppFilePath = "Dynamic Link Library (*.dll *.so);;"
@@ -123,7 +140,9 @@ class ExecCxtWidget(MTabWidget):
         
 
         
-
+    ##
+    # @brief 実行順序設定ファイル設定ボタンのスロット
+    # @param self 
     def setOrderFSlot(self):
         pyFilePath = "Python File (*.py);;"
         cppFilePath = "Lua FIle (*.lua);;"

@@ -2,8 +2,8 @@
 # -*- encoding: utf-8 -*-
 
 ##
-#   @file .py
-#   @brief 
+#   @file NamingWidget.py
+#   @brief ネームサービス関連設定ウィンドウ
 
 
 
@@ -36,8 +36,16 @@ from MTabWidget import MTabWidget
 from ManagerControl import ManagerControl
 
 
+##
+# @class NamingWidget
+# @brief ネームサービス関連設定ウィジェット
+#
 class NamingWidget(MTabWidget):
-    
+    ##
+    # @brief コンストラクタ
+    # @param self 
+    # @param mgrc マネージャ操作オブジェクト
+    # @param parent 親ウィジェット
     def __init__(self, mgrc, parent=None):
         MTabWidget.__init__(self, mgrc, parent)
         self.setGUI("naming")
