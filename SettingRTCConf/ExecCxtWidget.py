@@ -56,8 +56,14 @@ class ExecCxtWidget(MTabWidget):
         self.subLayouts[-1].addWidget(self.loadECButton)
         self.loadECButton.clicked.connect(self.loadECSlot)
 
-
-        self.addTextBox("filenameBox.sub", u"モジュール名を直接入力してください", [""] , "")
+        pathList = [""]
+        if language == "Python":
+            pathList.append("../ExecutionContext/MultipleOrderedEC-Python/MultipleOrderedEC.py")
+        elif language == "C++":
+            pathList.append("../ExecutionContext/MultipleOrderedEC-C++/release/MultipleOrderedEC.dll")
+            pathList.append("../ExecutionContext/MultipleOrderedEC-C++/MultipleOrderedEC.so")
+            
+        self.addTextCombox("filenameBox.sub", u"モジュール名を直接入力してください", [""], pathList , "")
         self.loadFileECButton = QtGui.QPushButton(u"実行コンテキスト読み込み")
         self.WidList["filenameBox.sub"]["Layout"].addWidget(self.loadFileECButton)
         self.loadFileECButton.clicked.connect(self.loadFileECSlot)
@@ -109,7 +115,7 @@ class ExecCxtWidget(MTabWidget):
     # @param self 
     def loadFileECSlot(self):
         wid = self.WidList["filenameBox.sub"]["Widget"]
-        s = str(wid.text().toLocal8Bit())
+        s = str(wid.currentText().toLocal8Bit())
         if s == "":
             return
         self.loadEC(s)
